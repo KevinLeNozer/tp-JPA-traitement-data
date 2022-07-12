@@ -1,10 +1,21 @@
 package bo.entity;
 
-import javax.persistence.Inheritance;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.time.LocalDate;
 
-@Inheritance
+@Entity
+@Table(name = "Personne")
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Personne {
+
+    @Id
+    @Column(name = "Id")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "seqIdPersonne")
+    @GenericGenerator(name = "seqIdPersonne", strategy = "increment")
+    private long id;
+
     private String identite;
     private String lieuNaissance;
     private String url;

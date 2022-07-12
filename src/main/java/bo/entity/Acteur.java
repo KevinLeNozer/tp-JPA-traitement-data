@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,8 +40,6 @@ public class Acteur extends Personne{
     public Acteur(String identite, String lieuNaissance, String url, LocalDate dateNaissance) {
         super(identite, lieuNaissance, url, dateNaissance);
     }
-
-
 
     @Override
     public String toString() {

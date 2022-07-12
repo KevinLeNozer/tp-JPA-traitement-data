@@ -1,6 +1,7 @@
 package bo;
 
 import bo.entity.Acteur;
+import bo.entity.Realisateur;
 import netscape.javascript.JSObject;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -13,13 +14,15 @@ import javax.persistence.Persistence;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class TestFichier {
 
     static EntityManagerFactory em = Persistence.createEntityManagerFactory("traitement-data");
 
     static EntityManager et = em.createEntityManager();
-    @SuppressWarnings("unchecked")
+
     public static void main(String[] args) throws IOException, ParseException {
 
         JSONParser jsonParser = new JSONParser();
@@ -33,6 +36,7 @@ public class TestFichier {
             System.out.println(acteurList);
 
             acteurList.forEach(emp -> parseActeurObject( (JSONObject) emp) );
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -46,8 +50,21 @@ public class TestFichier {
 //        et.getTransaction().commit();
     }
     public  static void parseActeurObject(JSONObject a) {
+
+        JSONObject naissance = (JSONObject) a.get("naissance");
+
+        Object dateNaissance = naissance.get("dateNaissance");
+
+        String[] newNaissance = ((String) dateNaissance).split("-");
+
         Acteur acteur = new Acteur();
         acteur.setIdentite((String) a.get("identite"));
+        acteur.setDateNaissance(LocalDate.of(
+                Integer.parseInt(newNaissance[0]),
+                Integer.parseInt(newNaissance[1]),
+                Integer.parseInt(newNaissance[2]))
+        );
+        acteur.setLieuNaissance((String) naissance.get("lieuNaissance"));
         System.out.println(acteur);
     }
 }
