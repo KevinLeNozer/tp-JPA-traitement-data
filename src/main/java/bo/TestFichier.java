@@ -1,5 +1,6 @@
 package bo;
 
+import bo.entity.Acteur;
 import netscape.javascript.JSObject;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -44,7 +45,9 @@ public class TestFichier {
 
 //        et.getTransaction().commit();
     }
-    public  static void parseActeurObject(JSONObject acteur) {
-        JSONObject acteurObject = (JSONObject) acteur.get("");
+    public  static void parseActeurObject(JSONObject a) {
+        Acteur acteur = new Acteur();
+        acteur.setIdentite((String) a.get("identite"));
+        System.out.println(acteur);
     }
 }

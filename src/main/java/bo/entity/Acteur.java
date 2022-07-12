@@ -39,4 +39,18 @@ public class Acteur extends Personne{
     public Acteur(String identite, String lieuNaissance, String url, LocalDate dateNaissance) {
         super(identite, lieuNaissance, url, dateNaissance);
     }
+
+
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Acteur{");
+        sb.append(super.toString());
+        sb.append("id=").append(id);
+        sb.append(", filmListActeurs=").append(filmListActeurs);
+        sb.append(", filmListcastingPrincipal=").append(filmListcastingPrincipal);
+        sb.append(", roles=").append(roles);
+        sb.append('}');
+        return sb.toString();
+    }
 }

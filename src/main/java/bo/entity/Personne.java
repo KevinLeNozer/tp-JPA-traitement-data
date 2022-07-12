@@ -51,4 +51,15 @@ public abstract class Personne {
     public void setDateNaissance(LocalDate dateNaissance) {
         this.dateNaissance = dateNaissance;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Personne{");
+        sb.append("identite='").append(identite).append('\'');
+        sb.append(", lieuNaissance='").append(lieuNaissance).append('\'');
+        sb.append(", url='").append(url).append('\'');
+        sb.append(", dateNaissance=").append(dateNaissance);
+        sb.append('}');
+        return sb.toString();
+    }
 }
