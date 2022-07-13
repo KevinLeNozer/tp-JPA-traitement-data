@@ -1,4 +1,4 @@
-package bo.entity;
+package BO.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -13,7 +13,7 @@ public class Role {
     @GenericGenerator(name = "seqIdRole", strategy = "increment")
     private long id;
 
-    @Column(name = "characterName", length = 150, nullable = false)
+    @Column(name = "characterName", length = 150)
     private String characterName;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -23,6 +23,15 @@ public class Role {
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "acteur_id")
     private Acteur acteur;
+
+    public Role() {
+    }
+
+    public Role(String characterName, Film film, Acteur acteur) {
+        this.characterName = characterName;
+        this.film = film;
+        this.acteur = acteur;
+    }
 
     public Acteur getActeur() {
         return acteur;
@@ -38,5 +47,22 @@ public class Role {
 
     public void setFilm(Film film) {
         this.film = film;
+    }
+
+    public String getCharacterName() {
+        return characterName;
+    }
+
+    public void setCharacterName(String characterName) {
+        this.characterName = characterName;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Role{");
+        sb.append("characterName='").append(characterName).append('\'');
+        sb.append(", film=").append(film);
+        sb.append('}');
+        return sb.toString();
     }
 }
