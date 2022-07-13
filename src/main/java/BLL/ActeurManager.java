@@ -2,6 +2,7 @@ package BLL;
 
 import BO.entity.*;
 import DAL.*;
+import org.hibernate.boot.jaxb.mapping.spi.JaxbNamedNativeQuery;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -37,7 +38,7 @@ public class ActeurManager {
         return true;
     }
     public Boolean validerFilm(Film film) {
-        return true;
+      return true;
     }
     public Boolean validerGenre(Genre genre) {
         return true;
@@ -104,7 +105,15 @@ public class ActeurManager {
 
         Film film = new Film();
 
+        if (f.get("plot") == null) {
+            film.setDescription("La description du film est manquant");
+        }
+
         film.setNom(f.get("nom").toString());
+
+        film.setImdId(f.get("id").toString());
+
+        film.setAnneeSortie(f.get("anneeSortie").toString());
 
         if (f.get("plot") != null) {
             film.setDescription(f.get("plot").toString());
@@ -125,10 +134,13 @@ public class ActeurManager {
 
         for (Genre genre : genresList) {
             genre.getFilmListGenre().add(film);
-            impl.saveGenre(genre);
+            if (genre.getId() == 0) {
+                impl.saveGenre(genre);
+            }
         }
 
         film.setGenres(genresList);
+
         return film;
     }
 

@@ -16,6 +16,9 @@ public class Film {
     @GenericGenerator(name = "seqIdFilm", strategy = "increment")
     private long id;
 
+    @Column(name = "imdId", length = 10)
+    private String imdId;
+
     @Column(name = "nom", length = 255)
     private String nom;
 
@@ -26,28 +29,12 @@ public class Film {
     private String description;
 
     @Column(name = "anneeSortie")
-    private LocalDate anneeSortie;
+    private String anneeSortie;
 
     @Column(name = "langue", length = 15)
     private String langue;
 
     public Film() {
-    }
-
-    public Film(String nom, String url, String description, LocalDate anneeSortie, String langue,
-                List<Realisateur> realisateurs, List<Acteur> acteurs, List<Genre> genres, List<Acteur> castingPrincipal, LieuTournage lieuTournage, List<Role> roles, Pays pays) {
-        this.nom = nom;
-        this.url = url;
-        this.description = description;
-        this.anneeSortie = anneeSortie;
-        this.langue = langue;
-        this.realisateurs = realisateurs;
-        this.acteurs = acteurs;
-        this.genres = genres;
-        this.castingPrincipal = castingPrincipal;
-        this.lieuTournage = lieuTournage;
-        this.roles = roles;
-        this.pays = pays;
     }
 
     @ManyToMany
@@ -117,6 +104,18 @@ public class Film {
         this.castingPrincipal = castingPrincipal;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public String getImdId() {
+        return imdId;
+    }
+
+    public void setImdId(String imdId) {
+        this.imdId = imdId;
+    }
+
     public List<Genre> getGenres() {
         return genres;
     }
@@ -128,7 +127,6 @@ public class Film {
     public List<Acteur> getActeurs() {
         return acteurs;
     }
-
 
     public void setActeurs(List<Acteur> acteurs) {
         this.acteurs = acteurs;
@@ -158,11 +156,11 @@ public class Film {
         this.description = description;
     }
 
-    public LocalDate getAnneeSortie() {
+    public String getAnneeSortie() {
         return anneeSortie;
     }
 
-    public void setAnneeSortie(LocalDate anneeSortie) {
+    public void setAnneeSortie(String anneeSortie) {
         this.anneeSortie = anneeSortie;
     }
 
@@ -190,12 +188,7 @@ public class Film {
         sb.append(", description='").append(description).append('\'');
         sb.append(", anneeSortie=").append(anneeSortie);
         sb.append(", langue='").append(langue).append('\'');
-        sb.append(", realisateurs=").append(realisateurs);
-        sb.append(", acteurs=").append(acteurs);
-        sb.append(", genres=").append(genres);
-        sb.append(", castingPrincipal=").append(castingPrincipal);
         sb.append(", lieuTournage=").append(lieuTournage);
-        sb.append(", roles=").append(roles);
         sb.append(", pays=").append(pays);
         sb.append('}');
         return sb.toString();

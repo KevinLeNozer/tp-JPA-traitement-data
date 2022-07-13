@@ -27,6 +27,10 @@ public class Genre {
         this.filmListGenre = filmListGenre;
     }
 
+    public long getId() {
+        return id;
+    }
+
     @ManyToMany(mappedBy = "genres")
     private List<Film> filmListGenre = new ArrayList<>();
 
