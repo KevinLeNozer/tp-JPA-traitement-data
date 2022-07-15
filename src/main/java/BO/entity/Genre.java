@@ -21,12 +21,6 @@ public class Genre {
     public Genre() {
     }
 
-    public Genre(long id, String genre, List<Film> filmListGenre) {
-        this.id = id;
-        this.genre = genre;
-        this.filmListGenre = filmListGenre;
-    }
-
     public long getId() {
         return id;
     }

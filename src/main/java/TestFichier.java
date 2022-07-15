@@ -34,7 +34,7 @@ public class TestFichier {
 
             JSONArray filmListJson = (JSONArray) obj;
 
-            ActeurManager acteurManager = new ActeurManager();
+            ActeurManager acteurManager = new ActeurManager(em);
 
             for (Object o : filmListJson) {
                 acteurManager.saveActeur((JSONObject) o);

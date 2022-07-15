@@ -27,12 +27,6 @@ public class Role {
     public Role() {
     }
 
-    public Role(String characterName, Film film, Acteur acteur) {
-        this.characterName = characterName;
-        this.film = film;
-        this.acteur = acteur;
-    }
-
     public Acteur getActeur() {
         return acteur;
     }

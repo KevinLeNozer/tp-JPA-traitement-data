@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,7 +18,7 @@ public class Realisateur {
     private long id;
 
     @ManyToMany(mappedBy="realisateurs")
-    private List<Film> filmListRealisateur;
+    private List<Film> filmListRealisateur = new ArrayList<>();
 
     @Embedded
     private Personne personne;
