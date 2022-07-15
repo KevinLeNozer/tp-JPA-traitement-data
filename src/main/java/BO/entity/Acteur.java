@@ -18,17 +18,17 @@ public class Acteur {
     @Embedded
     private Personne personne;
 
-    @Column(name = "lieuNaissance", length = 150, nullable = false)
+    @Column(name = "lieuNaissance", length = 150)
     private String lieuNaissance;
 
-    @Column(name = "dateNaissance", length = 30, nullable = false)
+    @Column(name = "dateNaissance", length = 30)
     private LocalDate dateNaissance;
 
     @ManyToMany(mappedBy="acteurs")
-    private List<Film> filmListActeurs;
+    private List<Film> filmListActeurs = new ArrayList<>();
 
     @ManyToMany(mappedBy="castingPrincipal")
-    private List<Film> filmListcastingPrincipal;
+    private List<Film> filmListcastingPrincipal = new ArrayList<>();
 
     @OneToMany(mappedBy = "acteur", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<Role> roles = new ArrayList<>();

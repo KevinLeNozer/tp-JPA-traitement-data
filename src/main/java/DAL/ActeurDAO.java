@@ -22,9 +22,9 @@ public class ActeurDAO {
     }
 
     public Acteur getActeur(Acteur acteur) {
-        TypedQuery<Acteur> query = em.createQuery("SELECT a FROM Acteur a WHERE a.id = :id",
+        TypedQuery<Acteur> query = em.createQuery("SELECT a FROM Acteur a WHERE a.personne.identite = :identite",
                 Acteur.class);
-        query.setParameter("id", acteur.getId());
+        query.setParameter("identite", acteur.getPersonne().getIdentite());
         return query.getResultList().size() > 0 ? query.getResultList().get(0) : null;
     }
 }

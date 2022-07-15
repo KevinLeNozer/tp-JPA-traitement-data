@@ -67,12 +67,6 @@ public class ActeurManager {
     }
     public static Acteur parseActeurObject(JSONObject a) {
 
-        JSONObject naissance = (JSONObject) a.get("naissance");
-
-        Object dateNaissance = naissance.get("dateNaissance");
-
-        String[] newNaissance = ((String) dateNaissance).split("-");
-
         Acteur acteur = new Acteur();
         Personne personne = new Personne();
 
@@ -104,13 +98,21 @@ public class ActeurManager {
 
         //Lisaison Role à l'acteur
         acteur.setRoles(roleList);
-//        acteur.getFilmListActeurs();
-        acteur.setDateNaissance(LocalDate.of(
-                Integer.parseInt(newNaissance[0]),
-                Integer.parseInt(newNaissance[1]),
-                Integer.parseInt(newNaissance[2]))
-        );
-        acteur.setLieuNaissance((String) naissance.get("lieuNaissance"));
+
+        JSONObject naissance = (JSONObject) a.get("naissance");
+
+        Object dateNaissance = naissance.get("dateNaissance");
+
+        String[] newNaissance = ((String) dateNaissance).split("-");
+
+        if (naissance != null) {
+            acteur.setDateNaissance(LocalDate.of(
+                    Integer.parseInt(newNaissance[0]),
+                    Integer.parseInt(newNaissance[1]),
+                    Integer.parseInt(newNaissance[2]))
+            );
+            acteur.setLieuNaissance((String) naissance.get("lieuNaissance"));
+        }
 
         return getActeur(acteur);
     }
@@ -147,7 +149,6 @@ public class ActeurManager {
         }
     }
 
-
     public static Film parseFilmObject(JSONObject f) {
 
         Film film = new Film();
@@ -162,9 +163,13 @@ public class ActeurManager {
         if (f.get("plot") != null) {
             film.setDescription(f.get("plot").toString());
         }
+
         if (f.get("langue") != null) {
             film.setLangue(f.get("langue").toString());
+        } else {
+            film.setLangue("La langue est manquante");
         }
+
         film.setUrl(f.get("url").toString());
         JSONArray genreListJson = (JSONArray) f.get("genres");
         List<Genre> genresList = new ArrayList<>();
@@ -172,6 +177,7 @@ public class ActeurManager {
         for (Object o : genreListJson) {
             genresList.add(parseGenreObject((String) o));
         }
+
         for (Genre genre : genresList) {
             genre.getFilmListGenre().add(film);
         }
@@ -179,6 +185,7 @@ public class ActeurManager {
         JSONArray realistListJson = (JSONArray) f.get("realisateurs");
 
         List<Realisateur> realisateurList = new ArrayList<>();
+
         for (Object o : realistListJson) {
             realisateurList.add(parseRealisateurObject((JSONObject) o));
         }
@@ -195,6 +202,31 @@ public class ActeurManager {
             Pays pays = parsePaysObject((JSONObject) f.get("pays"));
             film.setPays(pays);
         }
+
+        JSONArray castingPrincipalJson = (JSONArray) f.get("castingPrincipal");
+        List<Acteur> acteurPrincipalList = new ArrayList<>();
+        for (Object o : castingPrincipalJson) {
+            Acteur acteur = parseActeurPrincipalObject((JSONObject) o);
+            acteurPrincipalList.add(acteur);
+        }
+
+        for (Acteur acteur : acteurPrincipalList) {
+            acteur.getFilmListcastingPrincipal().add(film);
+        }
+
+        JSONArray acteurNormalJson = (JSONArray) f.get("acteurs");
+        List<Acteur> acteurNormalList = new ArrayList<>();
+        for (Object o : acteurNormalJson) {
+            Acteur acteur = parseActeurPrincipalObject((JSONObject) o);
+            acteurNormalList.add(acteur);
+        }
+
+        for (Acteur acteur : acteurNormalList) {
+            acteur.getFilmListActeurs().add(film);
+        }
+
+        film.setCastingPrincipal(acteurPrincipalList);
+        film.setActeurs(acteurNormalList);
 
         film.setGenres(genresList);
         film.setRealisateurs(realisateurList);
@@ -214,12 +246,45 @@ public class ActeurManager {
         }
     }
 
+    public static Acteur parseActeurPrincipalObject(JSONObject acteur) {
+        Acteur acteurPrincipal = new Acteur();
+        Personne personne = new Personne();
+
+        personne.setIdentite(acteur.get("identite").toString());
+        personne.setUrl(acteur.get("url").toString());
+
+        JSONObject naissance = (JSONObject) acteur.get("naissance");
+
+        if (naissance != null) {
+            if (naissance.get("dateNaissance") != null && naissance.get("dateNaissance") != "") {
+                String[] newNaissance = ((String) naissance.get("dateNaissance")).split("-");
+                int year = Integer.parseInt(newNaissance[0]);
+                int month = Integer.parseInt(newNaissance[1]);
+                int day = Integer.parseInt(newNaissance[2]);
+
+                if (month == 0){
+                    month = 1;
+                }
+                if (day == 0){
+                    day = 1;
+                }
+                acteurPrincipal.setDateNaissance(LocalDate.of(year, month, day));
+            }
+            if (naissance.get("lieuNaissance") != null && naissance.get("lieuNaissance") != "") {
+                acteurPrincipal.setLieuNaissance((String) naissance.get("lieuNaissance"));
+            } else {
+                acteurPrincipal.setLieuNaissance("Le Lieu de naissance est mnaquant");
+            }
+        }
+        acteurPrincipal.setPersonne(personne);
+        return getActeur(acteurPrincipal);
+    }
+
     public static Pays parsePaysObject(JSONObject p) {
         Pays pays = new Pays();
 
         pays.setNomPays(p.get("nom").toString());
         pays.setUrl(p.get("url").toString());
-
 
         return getPays(pays);
     }
@@ -255,7 +320,6 @@ public class ActeurManager {
             return implLieuTournage.getLieuTournage(lieuTournage);
         }
     }
-
 
     public static Genre parseGenreObject(String g) {
 
