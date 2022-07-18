@@ -4,6 +4,7 @@ import BO.entity.Film;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import java.util.List;
 
 public class FilmDAO {
     private static EntityManager em;
@@ -21,4 +22,6 @@ public class FilmDAO {
         query.setParameter("imdId", film.getImdId());
         return query.getResultList().size() > 0 ? query.getResultList().get(0) : null;
     }
+
+
 }

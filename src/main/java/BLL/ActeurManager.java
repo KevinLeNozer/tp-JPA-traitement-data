@@ -167,7 +167,7 @@ public class ActeurManager {
         if (f.get("langue") != null) {
             film.setLangue(f.get("langue").toString());
         } else {
-            film.setLangue("La langue est manquante");
+            film.setLangue("langue manquant");
         }
 
         film.setUrl(f.get("url").toString());
@@ -273,9 +273,12 @@ public class ActeurManager {
             if (naissance.get("lieuNaissance") != null && naissance.get("lieuNaissance") != "") {
                 acteurPrincipal.setLieuNaissance((String) naissance.get("lieuNaissance"));
             } else {
-                acteurPrincipal.setLieuNaissance("Le Lieu de naissance est mnaquant");
+                acteurPrincipal.setLieuNaissance("Le Lieu de naissance est manquant");
             }
+        } else {
+            acteurPrincipal.setLieuNaissance("Lieu de naissance manquant");
         }
+
         acteurPrincipal.setPersonne(personne);
         return getActeur(acteurPrincipal);
     }
