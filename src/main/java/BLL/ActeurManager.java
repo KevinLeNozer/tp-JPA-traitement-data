@@ -47,6 +47,7 @@ public class ActeurManager {
             implActeur.saveActeur(acteur);
         }
     }
+
     public void saveFilm(JSONObject f) {
         Film film = parseFilmObject(f);
         if (validerFilm(film)) {
@@ -113,7 +114,6 @@ public class ActeurManager {
             );
             acteur.setLieuNaissance((String) naissance.get("lieuNaissance"));
         }
-
         return getActeur(acteur);
     }
 

@@ -15,13 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static BLL.ActeurManager.parseFilmObject;
-
 public class TestFichier {
     static ConnectionDAO connectionDAO = new ConnectionDAO();
     static EntityManager em = connectionDAO.getConnection();
-
     public static void main(String[] args) throws IOException, ParseException {
-
         JSONParser jsonParser = new JSONParser();
 
         try (FileReader reader = new FileReader(
@@ -31,7 +28,6 @@ public class TestFichier {
 
             JSONArray acteurListJson = (JSONArray) obj;
 
-
             JSONArray filmListJson = (JSONArray) obj;
 
             ActeurManager acteurManager = new ActeurManager(em);
@@ -39,7 +35,6 @@ public class TestFichier {
             for (Object o : filmListJson) {
                 acteurManager.saveActeur((JSONObject) o);
             }
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

@@ -62,5 +62,4 @@ public class LieuTournage {
 
     @OneToMany(mappedBy = "lieuTournage", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<Film> filmLieuTournageList = new ArrayList<>();
-
 }
