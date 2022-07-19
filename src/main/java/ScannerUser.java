@@ -76,6 +76,7 @@ public class ScannerUser {
 
                 System.out.println("Veuillez indiquer un second film.");
                 String acteurSecond = sc.nextLine();
+
                 break;
             } else if (choix == 6) {
                 sc.nextLine();

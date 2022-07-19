@@ -23,7 +23,7 @@ public class ScannerManager {
     }
     public static List<Acteur> selectCastingByFilm(String filmNom) {
         Film film = implFilm.selectCastingByFilm(filmNom);
-        return film.getActeurs();
+        return film.getCastingPrincipal();
     }
     public static List<Film> selectFilmByAnneeSortie(String dateSortie1, String dateSortie2) {
         List<Film> film = implFilm.selectFilmByDate(dateSortie1, dateSortie2);

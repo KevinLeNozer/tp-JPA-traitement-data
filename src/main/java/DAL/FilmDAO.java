@@ -40,4 +40,6 @@ public class FilmDAO {
         query.setParameter("acteur2", acteur2);
         return query.getResultList();
     }
+
+
 }
