@@ -6,7 +6,9 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Classe Realisateur permettant de définir un realisateur
+ */
 @Entity
 @Table(name = "Realisateur")
 public class Realisateur {

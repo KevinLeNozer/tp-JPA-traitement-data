@@ -5,7 +5,9 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Classe LieuTournage permettant de définir un Lieu de tournage
+ */
 @Entity
 @Table(name = "LieuTournage")
 public class LieuTournage {

@@ -6,7 +6,9 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Classe Film permettant de définir un film
+ */
 @Entity
 @Table(name = "Film")
 public class Film {

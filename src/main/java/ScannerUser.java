@@ -14,6 +14,12 @@ public class ScannerUser {
     static ConnectionDAO connectionDAO = new ConnectionDAO();
     static EntityManager em = connectionDAO.getConnection();
     static ScannerManager scannerManager = new ScannerManager(em);
+
+    /**
+     * Application Scanner qui permet de lancer un programme permettant d'effectuer des opérations de recherche sur une base de données.
+     *Un menu est affiché à l'utilisateur pour lui permettre de choisir l'opération à accomplir.
+     * @param args
+     */
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
@@ -94,11 +100,10 @@ public class ScannerUser {
                     System.out.println(film.getNom());
                 }
                 break;
-            } else {
-                System.out.println("Choix incorrect");
+            } else if (choix == 7){
+                System.out.println("Fin de l'application");
             }
+            sc.close();
         }
-        System.out.println("Fin de l'application");
-        sc.close();
     }
 }

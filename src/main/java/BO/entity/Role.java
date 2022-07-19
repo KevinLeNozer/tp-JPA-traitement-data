@@ -3,7 +3,9 @@ package BO.entity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-
+/**
+ * Classe Role permettant de définir un role
+ */
 @Entity
 @Table(name = "Role")
 public class Role {
@@ -12,7 +14,6 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seqIdRole")
     @GenericGenerator(name = "seqIdRole", strategy = "increment")
     private long id;
-
     @Column(name = "characterName", length = 150)
     private String characterName;
 

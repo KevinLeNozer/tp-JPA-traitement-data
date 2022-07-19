@@ -5,7 +5,9 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Classe Genre permettant de définir un genre
+ */
 @Entity
 @Table(name = "Genre")
 public class Genre {

@@ -18,7 +18,7 @@ public class FilmDAO {
     }
 
     /**
-     * Récupère les films
+     * Récupère les films à partir de son id imdb
      *
      * @param film
      * @return
@@ -41,6 +41,13 @@ public class FilmDAO {
         return query.getResultList().size() > 0 ? query.getResultList().get(0) : null;
     }
 
+    /**
+     * Méthode qui récupère une liste de films en fonction de deux dates données
+     *
+     * @param dateSortie1
+     * @param dateSortie2
+     * @return
+     */
     public List<Film> selectFilmByDate(String dateSortie1, String dateSortie2) {
         TypedQuery<Film> query = em.createQuery("SELECT DISTINCT f FROM Film f WHERE f.anneeSortie >= " + ":dateSortie1 AND f.anneeSortie <= :dateSortie2", Film.class);
         query.setParameter("dateSortie1", dateSortie1);
@@ -48,6 +55,13 @@ public class FilmDAO {
         return query.getResultList();
     }
 
+    /**
+     * Méthode qui récupère une liste de films en fonction de deux acteurs donnés
+     *
+     * @param acteur1
+     * @param acteur2
+     * @return
+     */
     public List<Film> selectFilmBy2Acteur(String acteur1, String acteur2) {
         TypedQuery<Film> query = em.createQuery("SELECT f FROM Film f JOIN f.acteurs a WHERE a.personne.identite = :acteur1 AND f.id IN (SELECT f.id FROM Film f JOIN f" +
                 ".acteurs a WHERE a.personne.identite = :acteur2)", Film.class);
@@ -56,6 +70,14 @@ public class FilmDAO {
         return query.getResultList();
     }
 
+    /**
+     * Méthode qui récupère une liste de films entre deux dates données et un acteur donnés
+     *
+     * @param firstDate
+     * @param secondDate
+     * @param acteur
+     * @return
+     */
     public List<Film> selectFilmByDateWithActeur(String firstDate, String secondDate, String acteur) {
         TypedQuery<Film> query = em.createQuery("SELECT DISTINCT f FROM Film f JOIN f.acteurs a WHERE a" +
                 ".personne.identite =:acteur AND f.id IN (SELECT f.id FROM Film f JOIN f.acteurs WHERE f.anneeSortie >= :firstDate AND f.anneeSortie <= :secondDate)", Film.class);

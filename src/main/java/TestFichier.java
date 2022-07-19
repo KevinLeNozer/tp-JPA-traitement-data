@@ -13,7 +13,9 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Classe qui permet de lancer l'application qui met en base les éléments du fichier JSON
+ */
 import static BLL.ActeurManager.parseFilmObject;
 public class TestFichier {
     static ConnectionDAO connectionDAO = new ConnectionDAO();

@@ -7,6 +7,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe Acteur permettant de définir un acteur
+ */
 @Entity
 @Table(name = "Acteur")
 public class Acteur {

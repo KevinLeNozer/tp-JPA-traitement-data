@@ -4,7 +4,9 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-
+/**
+ * Classe Personne permettant de définir une personne dans la classe Acteur à l'aide de @Embeddable
+ */
 @Embeddable
 public class Personne {
 

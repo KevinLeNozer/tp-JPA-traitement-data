@@ -20,18 +20,37 @@ public class ActeurDAO {
         em.persist(acteur);
         em.getTransaction().commit();
     }
+    /**
+     * Récupère un acteur à partir de sont identite
+     *
+     * @param acteur
+     * @return
+     */
     public Acteur getActeur(Acteur acteur) {
-        TypedQuery<Acteur> query = em.createQuery("SELECT a FROM Acteur a WHERE a.personne.identite = :identite",
-                Acteur.class);
+        TypedQuery<Acteur> query = em.createQuery("SELECT a FROM Acteur a WHERE a.personne.identite = :identite", Acteur.class);
         query.setParameter("identite", acteur.getPersonne().getIdentite());
         return query.getResultList().size() > 0 ? query.getResultList().get(0) : null;
     }
+
+    /**
+     * Permet de récupérer un film à partir d'un acteur donné
+     *
+     * @param nomActeur
+     * @return
+     */
     public Acteur selectFilmByActeur(String nomActeur) {
         TypedQuery<Acteur> query = em.createQuery("SELECT a FROM Acteur a where a.personne.identite =:identite", Acteur.class);
         query.setParameter("identite", nomActeur);
         return query.getResultList().size() > 0 ? query.getResultList().get(0) : null;
     }
 
+    /**
+     * Méthode qui récupère tous les acteurs communs entre deux films
+     *
+     * @param film1
+     * @param film2
+     * @return
+     */
     public List<Acteur> selectActeurForTwoFilm(String film1, String film2) {
         TypedQuery<Film> query1 = em.createQuery("SELECT f FROM Film f WHERE f.nom =:film1",
                 Film.class);
