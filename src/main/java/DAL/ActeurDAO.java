@@ -24,4 +24,9 @@ public class ActeurDAO {
         query.setParameter("identite", acteur.getPersonne().getIdentite());
         return query.getResultList().size() > 0 ? query.getResultList().get(0) : null;
     }
+    public Acteur selectFilmByActeur(String nomActeur) {
+        TypedQuery<Acteur> query = em.createQuery("SELECT a FROM Acteur a where a.personne.identite =:identite", Acteur.class);
+        query.setParameter("identite", nomActeur);
+        return query.getResultList().size() > 0 ? query.getResultList().get(0) : null;
+    }
 }

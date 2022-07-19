@@ -1,4 +1,5 @@
 import BLL.ScannerManager;
+import BO.entity.Acteur;
 import BO.entity.Film;
 import DAL.ConnectionDAO;
 import DAL.FilmDAO;
@@ -10,6 +11,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ScannerUser {
+    static ConnectionDAO connectionDAO = new ConnectionDAO();
+    static EntityManager em = connectionDAO.getConnection();
+    static ScannerManager scannerManager = new ScannerManager(em);
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
@@ -21,31 +25,74 @@ public class ScannerUser {
         System.out.println("5. Affichage des acteurs communs à 2 films donnés");
         System.out.println("6. Affichage des films sortis entre 2 années données et qui ont un acteur/actrice donné au casting");
         System.out.println("7. Fin de l'application");
-
-        while (sc.hasNext()) {
-            if(sc.nextLine().equals("1")) {
-                System.out.println("Veuillez indiquer un acteur");
+        int choix = 0;
+        while (choix != 7) {
+             choix = sc.nextInt();
+            if(choix == 1) {
+                sc.nextLine();
+                System.out.println("Veuillez indiquer un acteur/actrice afin d'avoir sa filmographie.");
                 String acteurNom = sc.nextLine();
+                List<Film> films = scannerManager.selectFilmByActeur(acteurNom);
+                for (Film film : films) {
+                    System.out.println("=> " + film.getNom() + "sortie en " + film.getAnneeSortie());
+                }
                 break;
-            } else if (sc.nextInt() == 2) {
+            } else if (choix == 2) {
+                sc.nextLine();
+                System.out.println("Veuillez indiquer un film pour avoir son casting.");
+                String filmNom = sc.nextLine();
+                List<Acteur> acteurList = scannerManager.selectCastingByFilm(filmNom);
+                for (Acteur acteur : acteurList) {
+                    System.out.println("=> " + acteur.getPersonne().getIdentite());
+                }
+                break;
+            } else if (choix == 3) {
+                sc.nextLine();
+                System.out.println("Veuillez indiquer la première date.");
+                String firstDate = sc.nextLine();
+                System.out.println("Veuillez indiquer la deuxième date.");
+                String secondDate = sc.nextLine();
 
+                List<Film> filmList = scannerManager.selectFilmByAnneeSortie(firstDate, secondDate);
+                for (Film film : filmList) {
+                    System.out.println(film.getNom() + "sortie en => " + film.getAnneeSortie());
+                }
                 break;
-            } else if (sc.nextInt() == 3) {
+            } else if (choix == 4) {
+                sc.nextLine();
+                System.out.println("Veuillez indiquer un acteur/actrice.");
+                String firstActeur = sc.nextLine();
+                System.out.println("Veuillez indiquer un second acteur/actrice.");
+                String secondActeur = sc.nextLine();
+                List<Film> filmListActeur = scannerManager.selectFilmBy2Acteur(firstActeur, secondActeur);
+                for (Film filmL : filmListActeur) {
+                    System.out.println(filmL.getNom());
+                }
+                break;
+            } else if (choix == 5) {
+                sc.nextLine();
+                System.out.println("Veuillez indiquer un film.");
+                String acteurFirst = sc.nextLine();
 
+                System.out.println("Veuillez indiquer un second film.");
+                String acteurSecond = sc.nextLine();
                 break;
-            } else if (sc.nextInt() == 4) {
+            } else if (choix == 6) {
+                sc.nextLine();
+                System.out.println("Veuillez indiquer une première date.");
+                String dateFirst = sc.nextLine();
 
-                break;
-            } else if (sc.nextInt() == 5) {
+                System.out.println("Veuillez indiquer une seconde date.");
+                String dateSecond = sc.nextLine();
 
+                System.out.println("Veuillez indiquer un acteur/actrice.");
+                String nomActeur = sc.nextLine();
                 break;
-            } else if (sc.nextInt() == 6) {
-
-                break;
-            }else if(sc.nextInt() == 7) {
-                System.out.println("Fin de l'application");
-                sc.close();
+            } else {
+                System.out.println("Choix incorrect");
             }
         }
+        System.out.println("Fin de l'application");
+        sc.close();
     }
 }
