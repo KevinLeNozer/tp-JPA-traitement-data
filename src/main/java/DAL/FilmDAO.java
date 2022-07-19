@@ -16,30 +16,53 @@ public class FilmDAO {
         em.persist(film);
         em.getTransaction().commit();
     }
+
+    /**
+     * Récupère les films
+     *
+     * @param film
+     * @return
+     */
     public Film getFilm(Film film) {
         TypedQuery<Film> query = em.createQuery("SELECT f FROM Film f WHERE f.imdId = :imdId", Film.class);
         query.setParameter("imdId", film.getImdId());
         return query.getResultList().size() > 0 ? query.getResultList().get(0) : null;
     }
+
+    /**
+     *
+     *
+     * @param nomFilm
+     * @return
+     */
     public Film selectCastingByFilm(String nomFilm) {
         TypedQuery<Film> query = em.createQuery("SELECT f FROM Film f WHERE f.nom =:nomFilm", Film.class);
         query.setParameter("nomFilm", nomFilm);
         return query.getResultList().size() > 0 ? query.getResultList().get(0) : null;
     }
+
     public List<Film> selectFilmByDate(String dateSortie1, String dateSortie2) {
-        TypedQuery<Film> query = em.createQuery("SELECT f FROM Film f WHERE f.anneeSortie >= :dateSortie1 AND f.anneeSortie <= :dateSortie2", Film.class);
+        TypedQuery<Film> query = em.createQuery("SELECT DISTINCT f FROM Film f WHERE f.anneeSortie >= " + ":dateSortie1 AND f.anneeSortie <= :dateSortie2", Film.class);
         query.setParameter("dateSortie1", dateSortie1);
         query.setParameter("dateSortie2", dateSortie2);
         return query.getResultList();
     }
+
     public List<Film> selectFilmBy2Acteur(String acteur1, String acteur2) {
-        TypedQuery<Film> query = em.createQuery("SELECT DISTINCT f FROM Film f JOIN f.acteurs a WHERE a" +
-                ".personne.identite = :acteur1 AND f.id IN (SELECT f.id FROM Film f JOIN f" +
+        TypedQuery<Film> query = em.createQuery("SELECT f FROM Film f JOIN f.acteurs a WHERE a.personne.identite = :acteur1 AND f.id IN (SELECT f.id FROM Film f JOIN f" +
                 ".acteurs a WHERE a.personne.identite = :acteur2)", Film.class);
         query.setParameter("acteur1", acteur1);
         query.setParameter("acteur2", acteur2);
         return query.getResultList();
     }
 
+    public List<Film> selectFilmByDateWithActeur(String firstDate, String secondDate, String acteur) {
+        TypedQuery<Film> query = em.createQuery("SELECT DISTINCT f FROM Film f JOIN f.acteurs a WHERE a" +
+                ".personne.identite =:acteur AND f.id IN (SELECT f.id FROM Film f JOIN f.acteurs WHERE f.anneeSortie >= :firstDate AND f.anneeSortie <= :secondDate)", Film.class);
+        query.setParameter("acteur", acteur);
+        query.setParameter("firstDate", firstDate);
+        query.setParameter("secondDate", secondDate);
+        return query.getResultList();
+    }
 
 }

@@ -33,4 +33,14 @@ public class ScannerManager {
         List<Film> film = implFilm.selectFilmBy2Acteur(acteur1, acteur2);
         return film;
     }
+    public static List<Acteur> selectActeurForTwoFilm(String film1, String film2) {
+        List<Acteur> acteurs = implActeur.selectActeurForTwoFilm(film1, film2);
+        System.out.println(acteurs);
+        return acteurs;
+    }
+
+    public static List<Film> selectFilmByDateWithActeur(String firstDate, String secondDate, String acteur) {
+        List<Film> film = implFilm.selectFilmByDateWithActeur(firstDate, secondDate, acteur);
+        return film;
+    }
 }

@@ -72,22 +72,27 @@ public class ScannerUser {
             } else if (choix == 5) {
                 sc.nextLine();
                 System.out.println("Veuillez indiquer un film.");
-                String acteurFirst = sc.nextLine();
-
+                String filmFirst = sc.nextLine();
                 System.out.println("Veuillez indiquer un second film.");
-                String acteurSecond = sc.nextLine();
-
+                String filmSecond = sc.nextLine();
+                List<Acteur> acteurList = scannerManager.selectActeurForTwoFilm(filmFirst, filmSecond);
+                for (Acteur acteur : acteurList) {
+                    System.out.println("=> " + acteur.getPersonne().getIdentite());
+                }
                 break;
             } else if (choix == 6) {
                 sc.nextLine();
                 System.out.println("Veuillez indiquer une première date.");
                 String dateFirst = sc.nextLine();
-
                 System.out.println("Veuillez indiquer une seconde date.");
                 String dateSecond = sc.nextLine();
-
                 System.out.println("Veuillez indiquer un acteur/actrice.");
                 String nomActeur = sc.nextLine();
+
+                List<Film> films = scannerManager.selectFilmByDateWithActeur(dateFirst, dateSecond, nomActeur);
+                for (Film film : films) {
+                    System.out.println(film.getNom());
+                }
                 break;
             } else {
                 System.out.println("Choix incorrect");
